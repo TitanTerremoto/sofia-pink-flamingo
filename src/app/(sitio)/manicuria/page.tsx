@@ -15,8 +15,8 @@ export default function Manicuria() {
     <CategoryPage
       categoria="manicuria"
       forma="circulo"
-      izquierda={<EsmalteAnimado className="w-20 sm:w-36 lg:w-44" />}
-      derecha={<LimaAnimada className="w-20 sm:w-36 lg:w-44" />}
+      izquierda={<EsmalteAnimado className="w-[5.75rem] sm:w-36 lg:w-44" />}
+      derecha={<LimaAnimada className="w-[5.75rem] sm:w-36 lg:w-44" />}
     />
   );
 }

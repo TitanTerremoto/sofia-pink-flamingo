@@ -26,7 +26,9 @@ type Destello = {
  * Destellos suaves que flotan lentamente. Canvas liviano:
  * - se pausa cuando la pestaña no está visible o el canvas sale de pantalla;
  * - respeta "reducir movimiento" (queda estático);
- * - limita la cantidad de partículas en celulares.
+ * - limita partículas, resolución y cuadros por segundo en celulares;
+ * - cada brillo se dibuja una vez como "sello" y se reutiliza (sin crear
+ *   degradés en cada cuadro).
  */
 export function Sparkles({
   colores = ["255,255,255", "255,236,244", "244,192,208"],
@@ -41,7 +43,29 @@ export function Sparkles({
     if (!canvas || !ctx) return;
 
     const reducir = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const esCelular = window.matchMedia("(max-width: 640px)").matches;
+    const dpr = Math.min(window.devicePixelRatio || 1, esCelular ? 1.5 : 2);
+    // En celular basta con 30 cuadros por segundo: el movimiento es muy lento.
+    const msPorCuadro = esCelular ? 1000 / 30 : 0;
+    let ultimoCuadro = 0;
+    // Mismo ritmo visual con la mitad de cuadros.
+    const paso = esCelular ? 2 : 1;
+
+    // Un "sello" por color: halo radial pre-dibujado.
+    const TAM_SELLO = 64;
+    const sellos = new Map<string, HTMLCanvasElement>();
+    for (const color of colores) {
+      const sello = document.createElement("canvas");
+      sello.width = sello.height = TAM_SELLO;
+      const sctx = sello.getContext("2d");
+      if (!sctx) continue;
+      const g = sctx.createRadialGradient(TAM_SELLO / 2, TAM_SELLO / 2, 0, TAM_SELLO / 2, TAM_SELLO / 2, TAM_SELLO / 2);
+      g.addColorStop(0, `rgba(${color},0.9)`);
+      g.addColorStop(1, `rgba(${color},0)`);
+      sctx.fillStyle = g;
+      sctx.fillRect(0, 0, TAM_SELLO, TAM_SELLO);
+      sellos.set(color, sello);
+    }
     let destellos: Destello[] = [];
     let ancho = 0;
     let alto = 0;
@@ -76,9 +100,9 @@ export function Sparkles({
       ctx.clearRect(0, 0, ancho, alto);
       for (const d of destellos) {
         if (!reducir) {
-          d.x += d.vx;
-          d.y += d.vy;
-          d.fase += d.velFase;
+          d.x += d.vx * paso;
+          d.y += d.vy * paso;
+          d.fase += d.velFase * paso;
           if (d.y < -10) {
             d.y = alto + 10;
             d.x = Math.random() * ancho;
@@ -88,13 +112,12 @@ export function Sparkles({
         }
         const brillo = 0.25 + 0.75 * Math.abs(Math.sin(d.fase));
         const halo = d.r * 4;
-        const g = ctx.createRadialGradient(d.x, d.y, 0, d.x, d.y, halo);
-        g.addColorStop(0, `rgba(${d.color},${0.9 * brillo})`);
-        g.addColorStop(1, `rgba(${d.color},0)`);
-        ctx.fillStyle = g;
-        ctx.beginPath();
-        ctx.arc(d.x, d.y, halo, 0, Math.PI * 2);
-        ctx.fill();
+        const sello = sellos.get(d.color);
+        if (sello) {
+          ctx.globalAlpha = brillo;
+          ctx.drawImage(sello, d.x - halo, d.y - halo, halo * 2, halo * 2);
+          ctx.globalAlpha = 1;
+        }
         if (d.cruz) {
           ctx.strokeStyle = `rgba(255,255,255,${0.7 * brillo})`;
           ctx.lineWidth = 0.6;
@@ -109,8 +132,11 @@ export function Sparkles({
       }
     };
 
-    const loop = () => {
-      dibujar();
+    const loop = (ahora = 0) => {
+      if (ahora - ultimoCuadro >= msPorCuadro) {
+        ultimoCuadro = ahora;
+        dibujar();
+      }
       if (!reducir && visible && !document.hidden) frame = requestAnimationFrame(loop);
     };
 

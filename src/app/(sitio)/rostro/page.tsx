@@ -15,8 +15,8 @@ export default function Rostro() {
     <CategoryPage
       categoria="rostro"
       forma="redondeado"
-      izquierda={<OjoAnimado className="w-20 sm:w-36 lg:w-44" />}
-      derecha={<CejaAnimada className="w-20 sm:w-36 lg:w-44" />}
+      izquierda={<OjoAnimado className="w-[5.75rem] sm:w-36 lg:w-44" />}
+      derecha={<CejaAnimada className="w-[5.75rem] sm:w-36 lg:w-44" />}
     />
   );
 }

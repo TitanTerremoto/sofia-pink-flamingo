@@ -74,7 +74,7 @@ export function Calendario({
       </div>
       <div className="grid grid-cols-7 gap-1 text-center" role="grid">
         {DIAS.map((d, i) => (
-          <span key={i} className="pb-1 text-[0.7rem] text-ink-soft" aria-hidden>
+          <span key={i} className="pb-1 text-xs text-ink-soft" aria-hidden>
             {d}
           </span>
         ))}

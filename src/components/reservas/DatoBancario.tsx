@@ -21,7 +21,7 @@ export function DatoBancario({ etiqueta, valor, copiable = false }: { etiqueta: 
 
   return (
     <div className="flex items-center justify-between gap-3 py-3">
-      <dt className="title-caps text-[0.65rem] text-ink-soft">{etiqueta}</dt>
+      <dt className="title-caps text-xs text-ink-soft">{etiqueta}</dt>
       <dd className="flex min-w-0 items-center gap-2 text-right">
         <span className={`break-all ${cargado ? "text-ink" : "italic text-ink-soft"}`}>{cargado ? valor : "A completar"}</span>
         {copiable && cargado && (

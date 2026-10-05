@@ -86,7 +86,7 @@ export function Sidebar({ redes }: { redes: Red[] }) {
         >
           <IconoMenu className="h-6 w-6" />
         </button>
-        <Link href="/" aria-label="Ir al inicio" className="flex items-center gap-2 text-blush-600">
+        <Link href="/" aria-label="Ir al inicio" className="flex min-h-12 items-center gap-2 px-2 text-blush-600">
           <Flamenco className="h-8 w-auto" />
           <span className="font-script text-3xl leading-none">Sofía</span>
         </Link>

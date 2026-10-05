@@ -44,7 +44,7 @@ export default async function Inicio() {
       </section>
 
       {/* ───── SOBRE MÍ ───── */}
-      <section id="sobre-mi" aria-labelledby="titulo-sobre-mi" className="px-5 py-20 sm:py-28">
+      <section id="sobre-mi" aria-labelledby="titulo-sobre-mi" className="px-5 py-14 sm:py-28">
         <div className="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-[5fr_6fr] md:gap-16">
           <Reveal className="relative mx-auto w-full max-w-sm md:max-w-none">
             <div className="absolute -inset-3 -z-10 rotate-3 rounded-[2.5rem] bg-blush-200/60" aria-hidden />
@@ -75,7 +75,7 @@ export default async function Inicio() {
       </section>
 
       {/* ───── SERVICIOS ───── */}
-      <section aria-labelledby="titulo-servicios" className="px-5 py-16 sm:py-24">
+      <section aria-labelledby="titulo-servicios" className="px-5 py-12 sm:py-24">
         <SectionTitle id="titulo-servicios" bajada={textos.servicios.bajada}>
           {textos.servicios.titulo}
         </SectionTitle>
@@ -89,7 +89,7 @@ export default async function Inicio() {
       </section>
 
       {/* ───── CONTACTO / UBICACIÓN ───── */}
-      <section aria-labelledby="titulo-ubicacion" className="px-5 py-16 sm:py-24">
+      <section aria-labelledby="titulo-ubicacion" className="px-5 py-12 sm:py-24">
         <SectionTitle id="titulo-ubicacion" bajada={`${sitio.ubicacion.barrio}, ${sitio.ubicacion.ciudad}`}>
           Dónde encontrarme
         </SectionTitle>

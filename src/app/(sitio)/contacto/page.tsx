@@ -23,7 +23,7 @@ export default async function Contacto() {
     <>
       <PageBackground ambiente="contacto" />
 
-      <section className="px-5 pb-12 pt-10 sm:pt-16">
+      <section className="px-5 pb-10 pt-8 sm:pb-12 sm:pt-16">
         <div className="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-2 md:gap-14">
           <div className="text-center md:text-left">
             <div className="animate-logo-in">
@@ -32,7 +32,7 @@ export default async function Contacto() {
             <h1 className="title-caps mt-8 text-3xl text-ink sm:text-4xl">{textos.contacto.titulo}</h1>
             <p className="mt-4 font-display text-xl italic leading-snug text-ink-soft">{textos.contacto.bajada}</p>
           </div>
-          <Reveal className="relative mx-auto w-full max-w-sm">
+          <Reveal className="relative mx-auto w-full max-w-[15rem] sm:max-w-sm">
             <div className="absolute -inset-3 -z-10 -rotate-3 rounded-[2.5rem] bg-lavender-200/60" aria-hidden />
             <div className="relative aspect-[4/5] overflow-hidden rounded-[2.5rem] border-[6px] border-white shadow-soft">
               <Image
@@ -54,7 +54,7 @@ export default async function Contacto() {
             <ContactInfo />
             {estaCargado(sitio.ubicacion.indicaciones) && (
               <p className="rounded-[1.5rem] bg-white/50 p-5 text-sm leading-relaxed text-ink-soft">
-                <span className="title-caps mb-1 block text-[0.68rem] text-blush-500">Cómo llegar</span>
+                <span className="title-caps mb-1 block text-xs text-blush-500">Cómo llegar</span>
                 {sitio.ubicacion.indicaciones}
               </p>
             )}

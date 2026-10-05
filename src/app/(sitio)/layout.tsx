@@ -1,11 +1,14 @@
 import { Footer } from "@/components/layout/Footer";
 import { Sidebar } from "@/components/layout/Sidebar";
-import { redesCargadas } from "@/lib/contacto";
-import { obtenerSitio } from "@/lib/datos/contenido";
+import { BotonReservarFlotante } from "@/components/layout/BotonReservarFlotante";
+import { linkWhatsapp, redesCargadas } from "@/lib/contacto";
+import { obtenerSitio, reservasOnline } from "@/lib/datos/contenido";
 
 /** Estructura del sitio público: menú lateral + contenido + pie. */
 export default async function LayoutSitio({ children }: LayoutProps<"/">) {
   const sitio = await obtenerSitio();
+  const online = reservasOnline();
+  const hrefReservar = online ? "/reservar" : linkWhatsapp(sitio, "¡Hola Sofi! Quiero reservar un turno.");
   return (
     <>
       <a
@@ -21,6 +24,7 @@ export default async function LayoutSitio({ children }: LayoutProps<"/">) {
         </main>
         <Footer />
       </div>
+      {hrefReservar && <BotonReservarFlotante href={hrefReservar} externo={!online} />}
     </>
   );
 }

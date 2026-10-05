@@ -41,7 +41,7 @@ export async function ServiceDetail({
         </div>
       </div>
 
-      <div className="flex flex-col gap-6 p-6 sm:p-10">
+      <div className="flex flex-col gap-5 p-5 sm:gap-6 sm:p-10">
         <h3 className="font-display text-3xl font-medium leading-tight text-ink sm:text-4xl">{servicio.nombre}</h3>
 
         <Bloque titulo={servicio.tituloDescripcion} acento={acento}>
@@ -72,9 +72,9 @@ export async function ServiceDetail({
           </Bloque>
         ))}
 
-        <div className="mt-2 flex flex-col items-start gap-5 border-t border-blush-200/70 pt-6 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-2 flex flex-col items-stretch gap-5 border-t border-blush-200/70 pt-6 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="title-caps text-[0.7rem] text-ink-soft">Precio</p>
+            <p className="title-caps text-xs text-ink-soft">Precio</p>
             <p className="font-display text-4xl text-ink">{precio}</p>
             {servicio.destacado && <p className={`mt-1 text-sm font-normal ${acento}`}>{servicio.destacado}</p>}
             <p className="mt-1 text-xs text-ink-soft">Seña del {senaPorcentaje}% para confirmar el turno.</p>
@@ -89,7 +89,7 @@ export async function ServiceDetail({
 function Bloque({ titulo, acento, children }: { titulo: string; acento: string; children: React.ReactNode }) {
   return (
     <section className="text-[0.98rem] leading-relaxed text-ink-soft">
-      <h4 className={`title-caps mb-2 text-[0.72rem] ${acento}`}>{titulo}</h4>
+      <h4 className={`title-caps mb-2 text-xs ${acento}`}>{titulo}</h4>
       {children}
     </section>
   );

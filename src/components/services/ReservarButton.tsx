@@ -4,7 +4,7 @@ import { obtenerSitio, reservasOnline } from "@/lib/datos/contenido";
 import type { Servicio } from "@/lib/datos/tipos";
 
 const estilo =
-  "inline-flex min-h-12 items-center justify-center rounded-full px-9 title-caps text-sm tracking-[0.3em] transition-all duration-500";
+  "inline-flex min-h-13 w-full items-center justify-center rounded-full px-9 title-caps text-sm tracking-[0.3em] transition-all duration-500 active:scale-[.98] sm:w-auto";
 
 /**
  * Botón RESERVAR.

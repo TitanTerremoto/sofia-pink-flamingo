@@ -45,7 +45,7 @@ const CATEGORIAS: Record<Categoria, string> = { manicuria: "Manicuría", rostro:
 
 const estiloInput =
   "w-full rounded-2xl border border-blush-200 bg-white/80 px-4 py-3.5 text-base text-ink outline-none transition focus:border-blush-400 focus:ring-4 focus:ring-blush-100";
-const estiloEtiqueta = "title-caps mb-1.5 block text-[0.7rem] text-ink-soft";
+const estiloEtiqueta = "title-caps mb-1.5 block text-xs text-ink-soft";
 const botonPrincipal =
   "inline-flex min-h-13 w-full items-center justify-center rounded-full bg-blush-500 px-8 py-3.5 title-caps text-sm tracking-[0.24em] text-white shadow-[0_10px_30px_-10px_rgb(220_116_153/0.65)] transition hover:bg-blush-600 disabled:cursor-wait disabled:opacity-60 sm:w-auto";
 const botonSecundario =
@@ -151,7 +151,7 @@ export function FlujoReserva(p: Props) {
       <div className="glass mx-auto max-w-xl rounded-[2rem] p-8 text-center shadow-softer sm:p-10" role="status">
         <IconoDestello className="mx-auto h-6 w-6 text-blush-400" />
         <h2 className="mt-4 font-display text-3xl text-ink">¡Gracias, recibimos tu reserva!</h2>
-        <p className="mt-3 inline-block rounded-full bg-blush-100 px-4 py-1.5 title-caps text-[0.68rem] text-blush-600">
+        <p className="mt-3 inline-block rounded-full bg-blush-100 px-4 py-1.5 title-caps text-xs text-blush-600">
           Pendiente de verificación
         </p>
         <p className="mt-5 leading-relaxed text-ink-soft">
@@ -189,7 +189,7 @@ export function FlujoReserva(p: Props) {
             >
               {i + 1}
             </span>
-            <span className={`title-caps text-[0.62rem] sm:text-[0.7rem] ${i === paso ? "text-ink" : "text-ink-soft"}`}>{nombre}</span>
+            <span className={`title-caps text-xs tracking-[0.1em] sm:tracking-[0.28em] ${i === paso ? "text-ink" : "text-ink-soft"} ${i === paso ? "" : "hidden min-[400px]:inline"}`}>{nombre}</span>
             {i < 2 && <span className="h-px w-4 bg-blush-300 sm:w-8" aria-hidden />}
           </li>
         ))}
@@ -312,7 +312,7 @@ export function FlujoReserva(p: Props) {
             )}
             {fecha && !buscando && horarios && horarios.length > 0 && (
               <>
-                <p className="title-caps mb-3 text-center text-[0.7rem] text-ink-soft">{formatearDia(horarios[0])}</p>
+                <p className="title-caps mb-3 text-center text-xs text-ink-soft">{formatearDia(horarios[0])}</p>
                 <div className="grid grid-cols-3 gap-2.5 sm:grid-cols-4">
                   {horarios.map((h) => (
                     <button
@@ -371,7 +371,7 @@ export function FlujoReserva(p: Props) {
               required
               accept=".jpg,.jpeg,.png,.pdf,image/jpeg,image/png,application/pdf"
               onChange={alElegirArchivo}
-              className="block w-full rounded-2xl border border-dashed border-blush-300 bg-white/70 p-4 text-sm text-ink-soft file:mr-4 file:rounded-full file:border-0 file:bg-blush-100 file:px-4 file:py-2.5 file:title-caps file:text-[0.68rem] file:text-blush-600"
+              className="block w-full rounded-2xl border border-dashed border-blush-300 bg-white/70 p-4 text-sm text-ink-soft file:mr-4 file:rounded-full file:border-0 file:bg-blush-100 file:px-4 file:py-2.5 file:title-caps file:text-xs file:text-blush-600"
             />
             <p className="mt-2 text-xs leading-relaxed text-ink-soft">
               Tu turno queda <strong className="font-normal text-ink">pendiente de verificación</strong> hasta que Sofi revise el

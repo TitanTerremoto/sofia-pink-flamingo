@@ -13,7 +13,7 @@ export function SectionTitle({
 }) {
   const acento = tono === "lavanda" ? "text-lavender-500" : "text-blush-400";
   return (
-    <div className="mx-auto mb-10 max-w-xl text-center sm:mb-14">
+    <div className="mx-auto mb-8 max-w-xl text-center sm:mb-14">
       <h2 id={id} className="title-caps flex items-center justify-center gap-4 text-2xl text-ink sm:text-3xl">
         <IconoDestello className={`h-3 w-3 ${acento}`} />
         {children}
