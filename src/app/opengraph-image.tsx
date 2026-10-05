@@ -1,6 +1,9 @@
 import { ImageResponse } from "next/og";
 import { marca, sitioInicial } from "@/config/sitio";
 
+// Se genera una vez en el build (necesario también para la vista previa estática).
+export const dynamic = "force-static";
+
 export const alt = `${marca} · Manicuría, Rostro y Astrología`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";

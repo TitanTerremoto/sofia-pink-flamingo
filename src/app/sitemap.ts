@@ -1,6 +1,9 @@
 import type { MetadataRoute } from "next";
 import { urlSitio } from "@/config/sitio";
 
+// Se genera una vez en el build (necesario también para la vista previa estática).
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const paginas = [
     { ruta: "", prioridad: 1 },

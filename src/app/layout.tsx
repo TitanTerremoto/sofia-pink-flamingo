@@ -47,6 +47,8 @@ export const metadata: Metadata = {
   },
   twitter: { card: "summary_large_image" },
   alternates: { canonical: "/" },
+  // Vista previa en GitHub Pages: fuera de los buscadores.
+  ...(process.env.GITHUB_PAGES === "true" && { robots: { index: false, follow: false } }),
 };
 
 export const viewport: Viewport = {
