@@ -62,12 +62,12 @@ before(async () => {
      values (extract(dow from $1::date)::int, '10:00', '13:00')`,
     [fecha],
   );
+  // Los servicios y reglas vienen de la migración de datos iniciales; se fijan valores conocidos.
   await db.exec(`
-    insert into public.configuracion (clave, valor) values
-      ('reservas', '{"senaPorcentaje": 50, "intervaloMinutos": 30, "anticipacionMinimaHoras": 12, "horizonteDias": 60, "maxReservasPorHora": 3}');
-    insert into public.servicios (slug, categoria, nombre, duracion_minutos, precio) values
-      ('kapping', 'manicuria', 'Kapping', 90, 20000),
-      ('diseno', 'rostro', 'Diseño', 45, null);
+    update public.configuracion set valor = '{"senaPorcentaje": 50, "intervaloMinutos": 30, "anticipacionMinimaHoras": 12, "horizonteDias": 60, "maxReservasPorHora": 3}'
+      where clave = 'reservas';
+    update public.servicios set duracion_minutos = 90, precio = 20000 where slug = 'kapping';
+    update public.servicios set duracion_minutos = 45, precio = null where slug = 'diseno';
   `);
   servicioId = (await db.query<{ id: string }>(`select id from public.servicios where slug = 'kapping'`)).rows[0].id;
 });
@@ -76,6 +76,15 @@ after(async () => db.close());
 
 beforeEach(async () => {
   await db.exec(`delete from public.reservas; delete from public.clientes; delete from public.bloqueos;`);
+});
+
+describe("datos iniciales", () => {
+  test("cargan los 10 servicios y la configuración", async () => {
+    const s = await db.query(`select slug from public.servicios`);
+    assert.equal(s.rows.length, 10);
+    const c = await db.query<{ clave: string }>(`select clave from public.configuracion order by clave`);
+    assert.deepEqual(c.rows.map((r) => r.clave), ["reservas", "sitio", "textos"]);
+  });
 });
 
 describe("horarios disponibles", () => {
