@@ -1,26 +1,181 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ============================================================
+   Paleta Sofía Pink Flamingo
+   ============================================================ */
+@theme {
+  --color-blush-50: #fff8fa;
+  --color-blush-100: #fdeff3;
+  --color-blush-200: #fadbe5;
+  --color-blush-300: #f4c0d0; /* rosa empolvado */
+  --color-blush-400: #eb9db5;
+  --color-blush-500: #dc7499; /* rosa intenso, para acentos */
+  --color-blush-600: #c0567c;
+  --color-blush-700: #9b4062;
+
+  --color-ink: #4b2e3b; /* texto principal: malva profundo, nunca negro */
+  --color-ink-soft: #7a5867;
+
+  --color-lavender-50: #f7f3fd;
+  --color-lavender-100: #ede5fa;
+  --color-lavender-200: #ddd0f4;
+  --color-lavender-300: #c5b1ea;
+  --color-lavender-500: #8d73c6;
+  --color-lavender-700: #5e4a91;
+
+  --color-sky-soft: #e3effb;
+  --color-glow: #fff6e6;
+
+  --font-display: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-sans: var(--font-jost), "Jost", system-ui, sans-serif;
+  --font-script: var(--font-pinyon), "Pinyon Script", cursive;
+
+  --shadow-soft: 0 10px 40px -12px rgb(192 86 124 / 0.22);
+  --shadow-softer: 0 4px 24px -10px rgb(155 64 98 / 0.18);
+
+  --ease-silk: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-blush-50);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-weight: 300;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Los anchors (#kapping) no quedan tapados por la barra superior en celular */
+[id] {
+  scroll-margin-top: 5.5rem;
+}
+
+::selection {
+  background: var(--color-blush-200);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-blush-500);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ============================================================
+   Utilidades de marca
+   ============================================================ */
+@utility title-caps {
+  font-family: var(--font-display);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+@utility glass {
+  background: rgb(255 255 255 / 0.62);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgb(255 255 255 / 0.75);
+}
+
+/* ============================================================
+   Apariciones al hacer scroll (ver components/effects/Reveal)
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 1s var(--ease-silk),
+    transform 1s var(--ease-silk);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ============================================================
+   Zoom suave en imágenes (hover en compu, toque en celular)
+   ============================================================ */
+.zoom-frame img {
+  transition: transform 0.9s var(--ease-silk);
+}
+.zoom-frame {
+  transition:
+    box-shadow 0.6s var(--ease-silk),
+    transform 0.6s var(--ease-silk);
+}
+@media (hover: hover) {
+  .zoom-trigger:hover .zoom-frame img {
+    transform: scale(1.08);
+  }
+  .zoom-trigger:hover .zoom-frame {
+    box-shadow: var(--shadow-soft);
+    transform: translateY(-4px);
+  }
+}
+.zoom-trigger:active .zoom-frame img,
+.zoom-trigger:focus-visible .zoom-frame img {
+  transform: scale(1.08);
+}
+.zoom-trigger:active .zoom-frame {
+  transform: scale(0.98);
+}
+
+/* ============================================================
+   Animaciones
+   ============================================================ */
+@keyframes logo-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+.animate-logo-in {
+  animation: logo-in 1.8s var(--ease-silk) both;
+}
+.animate-fade-up {
+  animation: logo-in 1.6s var(--ease-silk) both;
+  animation-delay: var(--delay, 0.6s);
+}
+
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+.animate-float {
+  animation: float-soft 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
 }
