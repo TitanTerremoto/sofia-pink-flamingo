@@ -1,10 +1,13 @@
 import Link from "next/link";
 import { Flamenco } from "@/components/brand/Logo";
-import { sitio } from "@/config/sitio";
+import { marca } from "@/config/sitio";
+import { obtenerSitio } from "@/lib/datos/contenido";
+import { redesCargadas } from "@/lib/contacto";
 import { navegacion } from "./navegacion";
 import { RedesMini } from "./RedesMini";
 
-export function Footer() {
+export async function Footer() {
+  const sitio = await obtenerSitio();
   return (
     <footer className="border-t border-white/70 bg-white/40 px-6 py-10 backdrop-blur-sm">
       <div className="mx-auto flex max-w-5xl flex-col items-center gap-6 text-center">
@@ -24,9 +27,9 @@ export function Footer() {
             ))}
           </ul>
         </nav>
-        <RedesMini />
+        <RedesMini redes={redesCargadas(sitio)} />
         <p className="text-xs text-ink-soft">
-          © {new Date().getFullYear()} {sitio.marca} · {sitio.ubicacion.barrio}, {sitio.ubicacion.ciudad}
+          © {new Date().getFullYear()} {marca} · {sitio.ubicacion.barrio}, {sitio.ubicacion.ciudad}
         </p>
       </div>
     </footer>

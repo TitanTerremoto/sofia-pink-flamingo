@@ -1,14 +1,15 @@
 import { IconoEmail, IconoInstagram, IconoReloj, IconoUbicacion, IconoWhatsapp } from "@/components/brand/Iconos";
-import { sitio } from "@/config/sitio";
 import { direccionCompleta, estaCargado, linkEmail, linkInstagram, linkWhatsapp } from "@/lib/contacto";
+import { obtenerSitio } from "@/lib/datos/contenido";
 
 /** Datos de contacto y horarios. Lo que todavía no está cargado se muestra como "Próximamente". */
-export function ContactInfo() {
+export async function ContactInfo() {
+  const sitio = await obtenerSitio();
   const pendiente = <span className="italic opacity-70">Próximamente</span>;
-  const direccion = direccionCompleta();
-  const whatsapp = linkWhatsapp();
-  const instagram = linkInstagram();
-  const email = linkEmail();
+  const direccion = direccionCompleta(sitio);
+  const whatsapp = linkWhatsapp(sitio);
+  const instagram = linkInstagram(sitio);
+  const email = linkEmail(sitio);
 
   const filas = [
     {

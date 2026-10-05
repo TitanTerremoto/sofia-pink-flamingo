@@ -7,6 +7,7 @@ import { Flamenco, Logo } from "@/components/brand/Logo";
 import { IconoCerrar, IconoDestello, IconoMenu } from "@/components/brand/Iconos";
 import { navegacion } from "./navegacion";
 import { RedesMini } from "./RedesMini";
+import type { Red } from "@/lib/contacto";
 
 function ItemsMenu({ onNavigate }: { onNavigate?: () => void }) {
   const ruta = usePathname();
@@ -38,7 +39,7 @@ function ItemsMenu({ onNavigate }: { onNavigate?: () => void }) {
   );
 }
 
-export function Sidebar() {
+export function Sidebar({ redes }: { redes: Red[] }) {
   const [abierto, setAbierto] = useState(false);
   const ruta = usePathname();
 
@@ -70,7 +71,7 @@ export function Sidebar() {
         <nav aria-label="Principal">
           <ItemsMenu />
         </nav>
-        <RedesMini />
+        <RedesMini redes={redes} />
       </aside>
 
       {/* ───── Celular / tablet: barra superior + menú desplegable ───── */}
@@ -124,7 +125,7 @@ export function Sidebar() {
         <nav aria-label="Principal">
           <ItemsMenu onNavigate={() => setAbierto(false)} />
         </nav>
-        <RedesMini />
+        <RedesMini redes={redes} />
       </aside>
     </>
   );

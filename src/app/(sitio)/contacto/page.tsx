@@ -7,8 +7,8 @@ import { ContactButtons } from "@/components/contact/ContactButtons";
 import { ContactInfo } from "@/components/contact/ContactInfo";
 import { MapEmbed } from "@/components/contact/MapEmbed";
 import { imagenes } from "@/config/imagenes";
-import { sitio } from "@/config/sitio";
-import { textos } from "@/content/textos";
+import { marca } from "@/config/sitio";
+import { obtenerSitio, obtenerTextos } from "@/lib/datos/contenido";
 import { estaCargado } from "@/lib/contacto";
 
 export const metadata: Metadata = {
@@ -17,7 +17,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/contacto" },
 };
 
-export default function Contacto() {
+export default async function Contacto() {
+  const [sitio, textos] = await Promise.all([obtenerSitio(), obtenerTextos()]);
   return (
     <>
       <PageBackground ambiente="contacto" />
@@ -36,7 +37,7 @@ export default function Contacto() {
             <div className="relative aspect-[4/5] overflow-hidden rounded-[2.5rem] border-[6px] border-white shadow-soft">
               <Image
                 src={imagenes.sofia.contacto}
-                alt={`Sofi, de ${sitio.marca}`}
+                alt={`Sofi, de ${marca}`}
                 fill
                 sizes="(max-width: 768px) 90vw, 384px"
                 className="object-cover"

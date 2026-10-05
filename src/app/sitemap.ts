@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { sitio } from "@/config/sitio";
+import { urlSitio } from "@/config/sitio";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const paginas = [
@@ -10,7 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { ruta: "/contacto", prioridad: 0.7 },
   ];
   return paginas.map(({ ruta, prioridad }) => ({
-    url: `${sitio.url}${ruta}`,
+    url: `${urlSitio}${ruta}`,
     lastModified: new Date(),
     changeFrequency: "monthly",
     priority: prioridad,

@@ -50,3 +50,8 @@ export const imagenes = {
     "tarot-astrologico": "/images/astrologia/tarot-astrologico.svg",
   },
 } as const;
+
+/** Foto de un servicio por su slug; si no hay una propia, usa la portada de su categoría. */
+export function imagenServicio(slug: string, categoria: keyof typeof imagenes.categorias): string {
+  return (imagenes.servicios as Record<string, string>)[slug] ?? imagenes.categorias[categoria];
+}

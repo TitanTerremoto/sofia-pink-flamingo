@@ -1,21 +1,22 @@
-import { sitio } from "@/config/sitio";
-import { estaCargado } from "@/lib/contacto";
-import { linkInstagram } from "@/lib/contacto";
+import { marca, urlSitio } from "@/config/sitio";
+import { estaCargado, linkInstagram } from "@/lib/contacto";
+import { obtenerSitio } from "@/lib/datos/contenido";
 
 /**
  * Datos estructurados (schema.org) para que Google entienda el negocio local.
  * Sólo incluye los datos ya cargados en la configuración.
  */
-export function JsonLdNegocio() {
+export async function JsonLdNegocio() {
+  const sitio = await obtenerSitio();
   const { ubicacion, contacto } = sitio;
-  const instagram = linkInstagram();
+  const instagram = linkInstagram(sitio);
 
   const datos = {
     "@context": "https://schema.org",
     "@type": "BeautySalon",
-    name: sitio.marca,
-    url: sitio.url,
-    image: `${sitio.url}/opengraph-image`,
+    name: marca,
+    url: urlSitio,
+    image: `${urlSitio}/opengraph-image`,
     description:
       "Manicuría, lifting de pestañas, laminado y diseño de cejas, y astrología (carta natal, revolución solar, tarot astrológico).",
     areaServed: `${ubicacion.barrio}, ${ubicacion.ciudad}`,

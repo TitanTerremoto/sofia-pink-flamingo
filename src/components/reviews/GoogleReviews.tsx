@@ -1,6 +1,6 @@
 import { IconoEstrella } from "@/components/brand/Iconos";
 import { Reveal } from "@/components/effects/Reveal";
-import { sitio } from "@/config/sitio";
+import { obtenerSitio } from "@/lib/datos/contenido";
 import { estaCargado } from "@/lib/contacto";
 import { obtenerResenasGoogle } from "@/lib/googleReviews";
 
@@ -19,7 +19,7 @@ function Estrellas({ cantidad }: { cantidad: number }) {
  * no está configurada, se muestran sólo los enlaces a Google.
  */
 export async function GoogleReviews() {
-  const datos = await obtenerResenasGoogle();
+  const [datos, sitio] = await Promise.all([obtenerResenasGoogle(), obtenerSitio()]);
   const linkVer = datos?.linkGoogle ?? (estaCargado(sitio.google.linkResenas) ? sitio.google.linkResenas : null);
   const linkEscribir = estaCargado(sitio.google.linkEscribirResena) ? sitio.google.linkEscribirResena : null;
 

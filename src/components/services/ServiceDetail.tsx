@@ -1,8 +1,8 @@
 import Image from "next/image";
-import { imagenes } from "@/config/imagenes";
-import { sitio } from "@/config/sitio";
-import type { Servicio } from "@/content/servicios";
-import { formatPrecio, precioDe } from "@/lib/precio";
+import { imagenServicio } from "@/config/imagenes";
+import { obtenerReglas } from "@/lib/datos/contenido";
+import type { Servicio } from "@/lib/datos/tipos";
+import { formatPrecio } from "@/lib/precio";
 import { Reveal } from "@/components/effects/Reveal";
 import { IconoDestello, IconoReloj } from "@/components/brand/Iconos";
 import { ReservarButton } from "./ReservarButton";
@@ -10,7 +10,7 @@ import { ReservarButton } from "./ReservarButton";
 /**
  * Ficha completa de un servicio. Alterna foto izquierda/derecha en pantallas grandes.
  */
-export function ServiceDetail({
+export async function ServiceDetail({
   servicio,
   invertido = false,
   tono = "rosa",
@@ -20,7 +20,8 @@ export function ServiceDetail({
   tono?: "rosa" | "lavanda";
 }) {
   const acento = tono === "lavanda" ? "text-lavender-500" : "text-blush-500";
-  const precio = formatPrecio(precioDe(servicio.precioKey));
+  const precio = formatPrecio(servicio.precio);
+  const { senaPorcentaje } = await obtenerReglas();
 
   return (
     <Reveal
@@ -31,7 +32,7 @@ export function ServiceDetail({
       <div className={`zoom-trigger relative ${invertido ? "md:order-2" : ""}`}>
         <div className="zoom-frame relative aspect-[4/3] overflow-hidden md:aspect-auto md:h-full md:min-h-[28rem]">
           <Image
-            src={imagenes.servicios[servicio.slug]}
+            src={imagenServicio(servicio.slug, servicio.categoria)}
             alt={servicio.nombre}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
@@ -76,7 +77,7 @@ export function ServiceDetail({
             <p className="title-caps text-[0.7rem] text-ink-soft">Precio</p>
             <p className="font-display text-4xl text-ink">{precio}</p>
             {servicio.destacado && <p className={`mt-1 text-sm font-normal ${acento}`}>{servicio.destacado}</p>}
-            <p className="mt-1 text-xs text-ink-soft">Seña del {sitio.reservas.senaPorcentaje}% para confirmar el turno.</p>
+            <p className="mt-1 text-xs text-ink-soft">Seña del {senaPorcentaje}% para confirmar el turno.</p>
           </div>
           <ReservarButton servicio={servicio} tono={tono} />
         </div>

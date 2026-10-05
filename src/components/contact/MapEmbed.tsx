@@ -1,9 +1,10 @@
 import { IconoUbicacion } from "@/components/brand/Iconos";
 import { urlMapaEmbebido } from "@/lib/contacto";
+import { obtenerSitio } from "@/lib/datos/contenido";
 
 /** Mapa de Google Maps embebido (no requiere API key). */
-export function MapEmbed({ className = "" }: { className?: string }) {
-  const url = urlMapaEmbebido();
+export async function MapEmbed({ className = "" }: { className?: string }) {
+  const url = urlMapaEmbebido(await obtenerSitio());
   return (
     <div className={`overflow-hidden rounded-[2rem] border-4 border-white shadow-softer ${className}`}>
       {url ? (

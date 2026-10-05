@@ -1,8 +1,10 @@
 /**
  * ============================================================
- *  SERVICIOS
+ *  SERVICIOS (valores iniciales)
  * ============================================================
- *  Acá se editan nombres, descripciones, qué incluye, duración, etc.
+ *  Con la base de datos conectada, todo esto se edita desde
+ *  /admin → Servicios; estos valores sólo cargan la base la primera vez.
+ *  Sin base de datos se editan acá: nombres, descripciones, qué incluye, duración, etc.
  *  - Los PRECIOS no se escriben acá: van en src/config/precios.ts.
  *  - Las FOTOS no se escriben acá: van en src/config/imagenes.ts.
  *  - Las duraciones son estimadas: revisalas y ajustalas a tu ritmo real.
@@ -10,33 +12,12 @@
  * ============================================================
  */
 
-import { sitio } from "@/config/sitio";
-import type { PrecioKey } from "@/config/precios";
-import type { imagenes } from "@/config/imagenes";
+import { precios, type PrecioKey } from "@/config/precios";
+import type { Servicio } from "@/lib/datos/tipos";
 
-export type Categoria = "manicuria" | "rostro" | "astrologia";
+type ServicioInicial = Omit<Servicio, "precio"> & { precioKey: PrecioKey };
 
-export type Servicio = {
-  slug: keyof typeof imagenes.servicios;
-  categoria: Categoria;
-  nombre: string;
-  /** Título del bloque descriptivo: "Descripción" o "¿Qué es?". */
-  tituloDescripcion: string;
-  descripcion: string;
-  incluye: string[];
-  duracion: string;
-  /** Bloques extra según la categoría: mantenimiento, cuidados, modalidad, etc. */
-  detalles: { titulo: string; texto: string }[];
-  /** Mensaje destacado junto al precio (ej. "El precio incluye hasta 3 preguntas."). */
-  destacado?: string;
-  precioKey: PrecioKey;
-  /** Duración en minutos para el sistema de reservas (Fase 2). */
-  duracionMinutos: number;
-};
-
-const { diasHastaSesionCartaNatal, preguntasTarot } = sitio.astrologia;
-
-export const servicios: Servicio[] = [
+const serviciosBase: ServicioInicial[] = [
   // ───────────── MANICURÍA ─────────────
   {
     slug: "semipermanente",
@@ -203,7 +184,7 @@ export const servicios: Servicio[] = [
       },
       {
         titulo: "Tiempos",
-        texto: `Una vez realizada la reserva, la sesión se pacta aproximadamente ${diasHastaSesionCartaNatal} días después. Ese tiempo es necesario para analizar tu carta en profundidad antes del encuentro. Para armarla vas a necesitar tu fecha, hora exacta y lugar de nacimiento.`,
+        texto: `Una vez realizada la reserva, la sesión se pacta aproximadamente 7 días después. Ese tiempo es necesario para analizar tu carta en profundidad antes del encuentro. Para armarla vas a necesitar tu fecha, hora exacta y lugar de nacimiento.`,
       },
     ],
     precioKey: "precio_carta_natal",
@@ -242,7 +223,7 @@ export const servicios: Servicio[] = [
     tituloDescripcion: "¿Qué es?",
     descripcion:
       "Una lectura de tarot que integra el simbolismo de los planetas y los signos para responder tus preguntas con mayor profundidad y claridad.",
-    incluye: [`Hasta ${preguntasTarot} preguntas`, "Tirada y lectura astrológica", "Orientación sobre cada respuesta"],
+    incluye: ["Hasta 3 preguntas", "Tirada y lectura astrológica", "Orientación sobre cada respuesta"],
     duracion: "45 min aprox.",
     detalles: [
       {
@@ -250,12 +231,14 @@ export const servicios: Servicio[] = [
         texto: "[COMPLETAR: presencial / online por videollamada]",
       },
     ],
-    destacado: `El precio incluye hasta ${preguntasTarot} preguntas.`,
+    destacado: "El precio incluye hasta 3 preguntas.",
     precioKey: "precio_tarot_astrologico",
     duracionMinutos: 45,
   },
 ];
 
-export function serviciosDe(categoria: Categoria) {
-  return servicios.filter((s) => s.categoria === categoria);
-}
+/** Servicios con su precio inicial (src/config/precios.ts). */
+export const serviciosIniciales: Servicio[] = serviciosBase.map(({ precioKey, ...s }) => ({
+  ...s,
+  precio: precios[precioKey],
+}));

@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
-import { sitio } from "@/config/sitio";
+import { marca, sitioInicial } from "@/config/sitio";
 
-export const alt = `${sitio.marca} · Manicuría, Rostro y Astrología`;
+export const alt = `${marca} · Manicuría, Rostro y Astrología`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -27,7 +27,7 @@ export default function OpengraphImage() {
           MANICURÍA · ROSTRO · ASTROLOGÍA
         </div>
         <div style={{ fontSize: 24, marginTop: 14, color: "#7a5867" }}>
-          {`${sitio.ubicacion.barrio}, ${sitio.ubicacion.ciudad}`}
+          {`${sitioInicial.ubicacion.barrio}, ${sitioInicial.ubicacion.ciudad}`}
         </div>
       </div>
     ),

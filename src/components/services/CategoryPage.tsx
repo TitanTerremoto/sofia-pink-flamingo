@@ -1,8 +1,8 @@
 import { Logo } from "@/components/brand/Logo";
 import { PageBackground, type Ambiente } from "@/components/effects/PageBackground";
-import { imagenes } from "@/config/imagenes";
-import { serviciosDe, type Categoria } from "@/content/servicios";
-import { textos } from "@/content/textos";
+import { imagenServicio } from "@/config/imagenes";
+import { obtenerServiciosDe, obtenerTextos } from "@/lib/datos/contenido";
+import type { Categoria } from "@/lib/datos/tipos";
 import { SectionTitle } from "./SectionTitle";
 import { ServiceCircles } from "./ServiceCircles";
 import { ServiceDetail } from "./ServiceDetail";
@@ -12,7 +12,7 @@ import { ServiceDetail } from "./ServiceDetail";
  * encabezado (logo + ilustraciones) → círculos de servicios → fichas.
  * Cada página aporta su fondo y sus ilustraciones.
  */
-export function CategoryPage({
+export async function CategoryPage({
   categoria,
   izquierda,
   derecha,
@@ -30,7 +30,7 @@ export function CategoryPage({
   tono?: "rosa" | "lavanda";
   notaFinal?: React.ReactNode;
 }) {
-  const lista = serviciosDe(categoria);
+  const [lista, textos] = await Promise.all([obtenerServiciosDe(categoria), obtenerTextos()]);
   const texto = textos.categorias[categoria];
 
   return (
@@ -55,7 +55,7 @@ export function CategoryPage({
         </SectionTitle>
         <ServiceCircles
           forma={forma}
-          items={lista.map((s) => ({ href: `#${s.slug}`, titulo: s.nombre, imagen: imagenes.servicios[s.slug] }))}
+          items={lista.map((s) => ({ href: `#${s.slug}`, titulo: s.nombre, imagen: imagenServicio(s.slug, s.categoria) }))}
         />
       </section>
 

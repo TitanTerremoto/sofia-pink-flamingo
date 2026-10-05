@@ -10,10 +10,11 @@ import { MapEmbed } from "@/components/contact/MapEmbed";
 import { GoogleReviews } from "@/components/reviews/GoogleReviews";
 import { JsonLdNegocio } from "@/components/seo/JsonLdNegocio";
 import { imagenes } from "@/config/imagenes";
-import { sitio } from "@/config/sitio";
-import { textos } from "@/content/textos";
+import { marca } from "@/config/sitio";
+import { obtenerSitio, obtenerTextos } from "@/lib/datos/contenido";
 
-export default function Inicio() {
+export default async function Inicio() {
+  const [sitio, textos] = await Promise.all([obtenerSitio(), obtenerTextos()]);
   return (
     <>
       <PageBackground ambiente="inicio" />
@@ -50,7 +51,7 @@ export default function Inicio() {
             <div className="relative aspect-[4/5] overflow-hidden rounded-[2.5rem] border-[6px] border-white shadow-soft">
               <Image
                 src={imagenes.sofia.sobreMi}
-                alt={`Sofi, de ${sitio.marca}`}
+                alt={`Sofi, de ${marca}`}
                 fill
                 sizes="(max-width: 768px) 90vw, 420px"
                 className="object-cover"

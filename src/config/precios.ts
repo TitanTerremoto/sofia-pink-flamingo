@@ -1,11 +1,14 @@
 /**
  * ============================================================
- *  PRECIOS — se cambian SOLO acá y se actualizan en toda la web.
+ *  PRECIOS INICIALES
  * ============================================================
+ *  - Con la base de datos conectada: los precios se cambian desde
+ *    /admin → Servicios. Estos valores sólo cargan la base la primera vez.
+ *  - Sin base de datos: se cambian acá y se actualizan en toda la web.
  *
- *  - Escribí el número sin "$" ni puntos. Ej: 25000
- *  - Si dejás `null`, el sitio muestra "$ X".
- *  - La seña (50%) se calcula sola a partir de estos valores.
+ *  Número sin "$" ni puntos (ej. 25000). `null` muestra "$ X".
+ *  La seña se calcula sola a partir de estos valores.
+ * ============================================================
  */
 
 export const precios = {

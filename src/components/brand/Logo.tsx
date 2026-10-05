@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { imagenes } from "@/config/imagenes";
-import { sitio } from "@/config/sitio";
+import { marca } from "@/config/sitio";
 
 type Tamano = "hero" | "page" | "nav";
 
@@ -16,7 +16,7 @@ export function Logo({ tamano = "page", className = "" }: { tamano?: Tamano; cla
     return (
       <Image
         src={imagenes.logo}
-        alt={sitio.marca}
+        alt={marca}
         width={ancho}
         height={ancho}
         preload={tamano === "hero"}
@@ -35,7 +35,7 @@ export function Logo({ tamano = "page", className = "" }: { tamano?: Tamano; cla
   return (
     <span
       role="img"
-      aria-label={sitio.marca}
+      aria-label={marca}
       className={`inline-flex flex-col items-center leading-none text-blush-600 ${className}`}
     >
       <Flamenco className={`${escala.flamenco} w-auto`} />

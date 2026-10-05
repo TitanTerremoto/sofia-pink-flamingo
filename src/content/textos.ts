@@ -5,10 +5,14 @@
  *  Todo lo que está entre [corchetes] es un dato personal que
  *  sólo vos podés completar. El resto es un borrador que podés
  *  reescribir libremente con tu voz.
+ *  Con la base de datos conectada se editan desde /admin → Textos;
+ *  estos valores sólo cargan la base la primera vez.
  * ============================================================
  */
 
-export const textos = {
+import type { Textos } from "@/lib/datos/tipos";
+
+export const textosIniciales: Textos = {
   sobreMi: {
     titulo: "Sobre mí",
     saludo: "Hola, soy Sofi.",
@@ -53,4 +57,4 @@ export const textos = {
     titulo: "Reseñas",
     bajada: "Lo que cuentan quienes ya pasaron por el espacio.",
   },
-} as const;
+};

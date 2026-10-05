@@ -1,13 +1,15 @@
 import { IconoEmail, IconoInstagram, IconoUbicacion, IconoWhatsapp } from "@/components/brand/Iconos";
 import { linkComoLlegar, linkEmail, linkInstagram, linkWhatsapp } from "@/lib/contacto";
+import { obtenerSitio } from "@/lib/datos/contenido";
 
 /** Botones grandes de contacto. Los que no tienen dato cargado se muestran desactivados. */
-export function ContactButtons() {
+export async function ContactButtons() {
+  const sitio = await obtenerSitio();
   const botones = [
-    { etiqueta: "WhatsApp", href: linkWhatsapp("¡Hola Sofi! Te escribo desde la web."), Icono: IconoWhatsapp },
-    { etiqueta: "Instagram", href: linkInstagram(), Icono: IconoInstagram },
-    { etiqueta: "Email", href: linkEmail(), Icono: IconoEmail },
-    { etiqueta: "Cómo llegar", href: linkComoLlegar(), Icono: IconoUbicacion },
+    { etiqueta: "WhatsApp", href: linkWhatsapp(sitio, "¡Hola Sofi! Te escribo desde la web."), Icono: IconoWhatsapp },
+    { etiqueta: "Instagram", href: linkInstagram(sitio), Icono: IconoInstagram },
+    { etiqueta: "Email", href: linkEmail(sitio), Icono: IconoEmail },
+    { etiqueta: "Cómo llegar", href: linkComoLlegar(sitio), Icono: IconoUbicacion },
   ];
 
   return (
