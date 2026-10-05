@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    // Comprobantes de hasta 4 MB + margen del formulario (Vercel corta en 4,5 MB).
+    serverActions: { bodySizeLimit: "4.4mb" },
+  },
   images: {
     qualities: [75, 85],
     formats: ["image/avif", "image/webp"],
