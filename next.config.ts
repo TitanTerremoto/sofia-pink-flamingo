@@ -23,6 +23,8 @@ const nextConfig: NextConfig = githubPages
       },
       images: {
         qualities: [75, 85],
+        // Sólo para el modo ejemplo (src/config/ejemplo.ts).
+        remotePatterns: [{ protocol: "https", hostname: "images.unsplash.com" }],
         formats: ["image/avif", "image/webp"],
       },
       async headers() {

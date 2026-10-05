@@ -20,7 +20,9 @@
  *     o SVG, ideal 1200 px de ancho).
  */
 
-export const imagenes = {
+import { fotosEjemplo, modoEjemplo } from "./ejemplo";
+
+const imagenesPropias = {
   logo: null as string | null,
 
   sofia: {
@@ -49,7 +51,12 @@ export const imagenes = {
     "revolucion-solar": "/images/astrologia/revolucion-solar.svg",
     "tarot-astrologico": "/images/astrologia/tarot-astrologico.svg",
   },
-} as const;
+};
+
+/** En la vista previa (modo ejemplo) se usan fotos de muestra; en el sitio real, las de arriba. */
+export const imagenes: typeof imagenesPropias = modoEjemplo
+  ? { logo: imagenesPropias.logo, ...fotosEjemplo }
+  : imagenesPropias;
 
 /** Foto de un servicio por su slug; si no hay una propia, usa la portada de su categoría. */
 export function imagenServicio(slug: string, categoria: keyof typeof imagenes.categorias): string {

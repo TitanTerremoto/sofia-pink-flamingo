@@ -31,6 +31,8 @@ jobs:
       - run: npm run build
         env:
           GITHUB_PAGES: "true"
+          # Fotos y precios de ejemplo (src/config/ejemplo.ts), sólo en esta vista previa.
+          NEXT_PUBLIC_DEMO: "true"
           NEXT_PUBLIC_SITE_URL: https://titanterremoto.github.io/sofia-pink-flamingo
       - run: touch out/.nojekyll
       - uses: actions/upload-pages-artifact@v3

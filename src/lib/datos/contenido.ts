@@ -3,6 +3,7 @@ import { cache } from "react";
 import { reglasIniciales, sitioInicial } from "@/config/sitio";
 import { serviciosIniciales } from "@/content/servicios";
 import { textosIniciales } from "@/content/textos";
+import { modoEjemplo, preciosEjemplo } from "@/config/ejemplo";
 import { baseConfigurada } from "@/lib/supabase/entorno";
 import { clientePublico } from "@/lib/supabase/publico";
 import type { Categoria, ConfigSitio, ReglasReservas, Servicio, Textos } from "./tipos";
@@ -83,6 +84,8 @@ export function filaAServicio(f: FilaServicio): Servicio {
 
 /** Servicios activos, en el orden definido. */
 export const obtenerServicios = cache(async (): Promise<Servicio[]> => {
+  // Vista previa: precios inventados para mostrar cómo se ve (nunca en el sitio real).
+  if (modoEjemplo) return serviciosIniciales.map((s) => ({ ...s, precio: s.precio ?? preciosEjemplo[s.slug] ?? null }));
   if (!baseConfigurada()) return serviciosIniciales;
   const { data, error } = await clientePublico()
     .from("servicios")
