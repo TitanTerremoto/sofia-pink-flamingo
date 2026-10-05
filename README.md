@@ -4,6 +4,10 @@ Sitio web de **Sofía Pink Flamingo**: Manicuría, Rostro y Astrología en Parqu
 
 Next.js 16 (App Router) · TypeScript · Tailwind CSS 4 · diseño mobile-first.
 
+**Vista previa:** https://titanterremoto.github.io/sofia-pink-flamingo/
+(sitio público estático, con fotos y datos de ejemplo; se actualiza solo en cada push a `master`.
+No incluye reservas online ni el panel `/admin`, que necesitan servidor: esos van en Vercel.)
+
 ## Estado del proyecto
 
 | Fase | Contenido | Estado |
