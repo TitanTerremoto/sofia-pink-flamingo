@@ -34,7 +34,18 @@ cualquier persona (o agente) pueda retomarlo sin el contexto de la conversación
 
 ---
 
-## FASE 2 — Sistema de reservas + panel administrador
+## FASE 2 — Sistema de reservas + panel administrador ✅ (código terminado)
+
+**Estado:** implementada y con tests (`npm test`). Para activarla: [FASE2-PUESTA-EN-MARCHA.md](FASE2-PUESTA-EN-MARCHA.md).
+Diferencias con el plan original:
+
+- `configuracion` usa las claves `sitio`, `textos` y `reservas` (formato en `src/lib/datos/tipos.ts`).
+- Las reservas guardan `cliente_nombre` y `cliente_telefono` propios (reutilizar un email no pisa datos).
+- Comprobantes: máx. **4 MB** (Vercel corta pedidos de 4,5 MB).
+- **Pendiente de la Fase 2:** subir fotos/logo desde el panel (hoy: `src/config/imagenes.ts`).
+  Plan: bucket público `fotos` + columna `imagen` en `servicios` + claves de imagen en `configuracion`.
+- Las horas se manejan como UTC-3 fijo en los formularios del panel (Argentina no tiene horario de verano);
+  la agenda en la base usa la zona `America/Argentina/Buenos_Aires`.
 
 ### 2.1 Modelo de datos (Postgres / Supabase)
 
@@ -66,9 +77,7 @@ alter table reservas add constraint sin_superposicion
 Así, aunque dos personas envíen al mismo segundo, la base rechaza la segunda.
 Si Sofi rechaza o cancela, el horario se libera automáticamente.
 
-> **Pregunta abierta para Sofi:** ¿se puede atender a dos personas a la vez en distintas
-> categorías (ej. una astrología online mientras otra persona espera)? Por ahora se asume
-> que **no**: una sola agenda.
+> **Decidido (5/10/2026):** Sofi no atiende dos turnos a la vez → una sola agenda para todos los servicios.
 
 ### 2.2 Flujo del cliente (`/reservar?servicio=kapping`)
 
@@ -134,6 +143,10 @@ Confirmar dos veces no envía dos emails (se chequea `email_enviado_en`).
 ---
 
 ## FASE 3 — Email, Google Calendar y (opcional) Mercado Pago
+
+**Dónde se engancha:** `src/lib/admin/acciones.ts` → `cambiarEstado()`, donde está el comentario
+"Fase 3". Sólo cuando `cambio === true` y el estado es `confirmada`. Usar las columnas
+`email_enviado_en` y `calendar_event_id` (ya existen) para no duplicar.
 
 ### 3.1 Email de confirmación (Resend)
 

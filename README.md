@@ -9,11 +9,12 @@ Next.js 16 (App Router) · TypeScript · Tailwind CSS 4 · diseño mobile-first.
 | Fase | Contenido | Estado |
 | --- | --- | --- |
 | **1. Sitio** | Inicio, Manicuría, Rostro, Astrología, Contacto, menú lateral, animaciones, SEO, mapa, reseñas de Google (preparadas) | ✅ Hecha |
-| **2. Reservas** | Turnos con disponibilidad real, seña 50 %, carga de comprobante, estados, panel administrador | ⏳ Pendiente: ver [docs/ROADMAP.md](docs/ROADMAP.md) |
+| **2. Reservas** | Turnos con disponibilidad real, seña 50 %, carga de comprobante, estados, panel administrador | ✅ Código hecho · falta crear Supabase: [docs/FASE2-PUESTA-EN-MARCHA.md](docs/FASE2-PUESTA-EN-MARCHA.md) |
 | **3. Integraciones** | Email de confirmación, Google Calendar, (opcional) Mercado Pago | ⏳ Pendiente: ver [docs/ROADMAP.md](docs/ROADMAP.md) |
 
-Mientras no esté la Fase 2, el botón **RESERVAR** abre WhatsApp con un mensaje ya armado
-(cuando el número esté cargado en la configuración).
+Mientras Supabase no esté conectado, el botón **RESERVAR** abre WhatsApp con un mensaje ya armado
+y el contenido se lee de los archivos de abajo. Con Supabase conectado, todo se edita desde
+el panel **/admin** y esos archivos quedan sólo como valores iniciales.
 
 ## ¿Dónde se cambia cada cosa?
 
@@ -27,8 +28,7 @@ Mientras no esté la Fase 2, el botón **RESERVAR** abre WhatsApp con un mensaje
 
 Guía paso a paso (sin saber programar): [docs/CONFIGURACION.md](docs/CONFIGURACION.md).
 
-> En la Fase 2 estos datos pasan a editarse desde el panel administrador; estos archivos
-> quedan como valores iniciales.
+> Fotos y logo se siguen cambiando en `src/config/imagenes.ts` (subirlas desde el panel queda pendiente).
 
 ## Correr el proyecto en tu compu
 
@@ -44,10 +44,14 @@ npm run dev
 
 Abrí http://localhost:3000.
 
-Antes de publicar, verificá que todo compile:
+Antes de publicar, verificá que todo compile y que pasen los tests:
 
 ```bash
 npm run build
+```
+
+```bash
+npm test
 ```
 
 ## Publicarlo
@@ -68,6 +72,17 @@ src/
 │   ├── illustrations/   esmalte, lima, ojo, ceja, órbita de planetas
 │   ├── services/        círculos de servicios, fichas, botón Reservar
 │   ├── contact/         datos de contacto, botones, mapa
-│   └── reviews/         reseñas de Google
-└── lib/                 formato de precios, links de contacto, API de reseñas
+│   ├── reviews/         reseñas de Google
+│   ├── reservas/        flujo de reserva (pasos, calendario, datos bancarios)
+│   └── admin/           piezas del panel
+├── app/(sitio)/         páginas públicas + /reservar
+├── app/admin/           panel (login, reservas, calendario, clientes, servicios, horarios, configuración)
+├── proxy.ts             protege /admin (sesión)
+└── lib/
+    ├── datos/           ÚNICA puerta al contenido editable (base o archivos)
+    ├── reservas/        acciones del servidor, validación, fechas
+    ├── admin/           acciones del panel (siempre verifican admin)
+    └── supabase/        clientes: público, con sesión, servidor (secreto)
+supabase/migrations/     esquema, funciones, seguridad (RLS) y datos iniciales
+tests/                   tests de la base (Postgres real con PGlite) y de validaciones
 ```

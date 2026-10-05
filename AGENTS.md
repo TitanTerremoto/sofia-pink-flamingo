@@ -18,4 +18,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - No inventar datos personales, bancarios ni reseñas.
 - Secretos sólo en variables de entorno de servidor (sin prefijo `NEXT_PUBLIC_`).
 - Un turno sólo se confirma por acción de la admin o webhook verificado; nunca por subir un comprobante.
-- Verificar con `npm run build` y `npm run lint` antes de commitear. Mobile-first: probar a 375–390 px sin scroll horizontal.
+- Verificar con `npm run build`, `npm run lint` y `npm test` antes de commitear. Mobile-first: probar a 375–390 px sin scroll horizontal.
+- Contenido editable: leer SIEMPRE por `src/lib/datos/contenido.ts` (base de datos o archivos). No importar `src/config/*`/`src/content/*` desde páginas.
+- Reglas de turnos (horarios, superposición, estados) viven en SQL (`supabase/migrations`). Cambiarlas = nueva migración + tests en `tests/db`.
+- Toda Server Action del panel empieza con `requerirAdmin()`. `clienteServidor()` (service_role) sólo para subir comprobantes y `crear_reserva`.

@@ -1,5 +1,10 @@
 # Cómo editar el sitio (guía para Sofi)
 
+> **Con la base de datos conectada (Fase 2)**, precios, servicios, horarios, contacto, datos
+> bancarios y textos se editan desde el panel **/admin**, sin tocar código.
+> Esta guía sirve mientras la base no esté conectada, y para las **fotos y el logo** (punto 3),
+> que siempre se cambian acá.
+
 Todo lo editable está en **5 archivos**. No hace falta tocar nada más.
 Después de guardar un cambio y subirlo a GitHub, Vercel publica la web nueva solo (en 1–2 minutos).
 
