@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sofía Pink Flamingo
 
-## Getting Started
+Sitio web de **Sofía Pink Flamingo**: Manicuría, Rostro y Astrología en Parque Chas, CABA.
 
-First, run the development server:
+Next.js 16 (App Router) · TypeScript · Tailwind CSS 4 · diseño mobile-first.
+
+## Estado del proyecto
+
+| Fase | Contenido | Estado |
+| --- | --- | --- |
+| **1. Sitio** | Inicio, Manicuría, Rostro, Astrología, Contacto, menú lateral, animaciones, SEO, mapa, reseñas de Google (preparadas) | ✅ Hecha |
+| **2. Reservas** | Turnos con disponibilidad real, seña 50 %, carga de comprobante, estados, panel administrador | ⏳ Pendiente: ver [docs/ROADMAP.md](docs/ROADMAP.md) |
+| **3. Integraciones** | Email de confirmación, Google Calendar, (opcional) Mercado Pago | ⏳ Pendiente: ver [docs/ROADMAP.md](docs/ROADMAP.md) |
+
+Mientras no esté la Fase 2, el botón **RESERVAR** abre WhatsApp con un mensaje ya armado
+(cuando el número esté cargado en la configuración).
+
+## ¿Dónde se cambia cada cosa?
+
+| Quiero cambiar… | Archivo |
+| --- | --- |
+| Dirección, WhatsApp, email, Instagram, horarios, datos bancarios, % de seña | [`src/config/sitio.ts`](src/config/sitio.ts) |
+| **Precios** | [`src/config/precios.ts`](src/config/precios.ts) |
+| Logo y fotos | [`src/config/imagenes.ts`](src/config/imagenes.ts) + archivos en `public/images/` |
+| Texto "Sobre mí" y títulos | [`src/content/textos.ts`](src/content/textos.ts) |
+| Descripción, duración, cuidados de cada servicio | [`src/content/servicios.ts`](src/content/servicios.ts) |
+
+Guía paso a paso (sin saber programar): [docs/CONFIGURACION.md](docs/CONFIGURACION.md).
+
+> En la Fase 2 estos datos pasan a editarse desde el panel administrador; estos archivos
+> quedan como valores iniciales.
+
+## Correr el proyecto en tu compu
+
+Requiere **Node.js 20.9 o superior** (recomendado: la versión LTS de https://nodejs.org).
+
+```bash
+npm install
+```
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abrí http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Antes de publicar, verificá que todo compile:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+```
 
-## Learn More
+## Publicarlo
 
-To learn more about Next.js, take a look at the following resources:
+Ver [docs/INTEGRACIONES.md](docs/INTEGRACIONES.md): hosting (Vercel), dominio, Google Maps y reseñas de Google.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Estructura
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```text
+src/
+├── app/                 páginas (/, /manicuria, /rostro, /astrologia, /contacto), SEO
+├── config/              ← datos editables (sitio, precios, imágenes)
+├── content/             ← textos editables (servicios, sobre mí)
+├── components/
+│   ├── brand/           logo e íconos
+│   ├── layout/          menú lateral, pie de página
+│   ├── effects/         destellos, apariciones al hacer scroll, fondos
+│   ├── illustrations/   esmalte, lima, ojo, ceja, órbita de planetas
+│   ├── services/        círculos de servicios, fichas, botón Reservar
+│   ├── contact/         datos de contacto, botones, mapa
+│   └── reviews/         reseñas de Google
+└── lib/                 formato de precios, links de contacto, API de reseñas
+```

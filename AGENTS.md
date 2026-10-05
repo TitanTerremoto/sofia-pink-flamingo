@@ -7,3 +7,15 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+# Proyecto Sofía Pink Flamingo — reglas para agentes
+
+- Idioma del sitio y de la documentación: español rioplatense.
+- Antes de continuar, leer `README.md` y `docs/ROADMAP.md` (plan de Fases 2 y 3 y sus principios).
+- Datos editables: `src/config/*` (sitio, precios, imágenes) y `src/content/*` (textos, servicios).
+  Las páginas nunca escriben precios, contactos o fotos a mano: siempre leen de ahí.
+- Un valor que empieza con `[` es placeholder: usar `estaCargado()` (src/lib/contacto.ts) y ocultar/desactivar, nunca mostrar datos inventados.
+- No inventar datos personales, bancarios ni reseñas.
+- Secretos sólo en variables de entorno de servidor (sin prefijo `NEXT_PUBLIC_`).
+- Un turno sólo se confirma por acción de la admin o webhook verificado; nunca por subir un comprobante.
+- Verificar con `npm run build` y `npm run lint` antes de commitear. Mobile-first: probar a 375–390 px sin scroll horizontal.

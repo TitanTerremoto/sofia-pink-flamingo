@@ -14,7 +14,7 @@ export function ContactButtons() {
     <ul className="grid grid-cols-2 gap-3 sm:gap-4">
       {botones.map(({ etiqueta, href, Icono }) => {
         const clase =
-          "flex min-h-14 w-full items-center justify-center gap-2.5 rounded-full px-4 title-caps text-[0.78rem] tracking-[0.2em] transition-all duration-500";
+          "flex min-h-14 w-full items-center justify-center gap-2 whitespace-nowrap rounded-full px-3 title-caps text-[0.72rem] tracking-[0.14em] sm:text-[0.78rem] sm:tracking-[0.2em] transition-all duration-500";
         return (
           <li key={etiqueta}>
             {href ? (
